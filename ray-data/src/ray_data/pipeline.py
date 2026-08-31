@@ -3,6 +3,7 @@ import time
 
 from ray_data.dataset import create_mock_dataset
 from ray_data.decode import decode, SECONDS_FOR_SIMULATION
+from ray_data.quality_filter import quality_filter
 
 
 DS_SIZE = 1000
