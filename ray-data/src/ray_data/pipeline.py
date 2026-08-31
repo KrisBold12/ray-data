@@ -4,6 +4,7 @@ import time
 from ray_data.dataset import create_mock_dataset
 from ray_data.decode import decode, SECONDS_FOR_SIMULATION
 from ray_data.quality_filter import quality_filter
+from ray_data.embedding import MockEmbedder
 
 
 DS_SIZE = 1000
@@ -15,7 +16,11 @@ def main():
     print(f"Size: {ds.count()}\nSchema: {ds.schema()}\nSamples: {ds.take(2)}\n# blocks: {ds.num_blocks()}")
 
     ds = ds.map_batches(decode)
-    ds = ds.map_batches(quality_filter)
+    ds = ds.map_batches(quality_filter, batch_format="pyarrow")
+    ds = ds.map_batches(
+        MockEmbedder,
+        compute=ray.data.ActorPoolStrategy(size=8)
+    )
 
     start = time.perf_counter()
     mat = ds.materialize()
