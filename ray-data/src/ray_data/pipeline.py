@@ -15,6 +15,7 @@ def main():
     print(f"Size: {ds.count()}\nSchema: {ds.schema()}\nSamples: {ds.take(2)}\n# blocks: {ds.num_blocks()}")
 
     ds = ds.map_batches(decode)
+    ds = ds.map_batches(quality_filter)
 
     start = time.perf_counter()
     mat = ds.materialize()
