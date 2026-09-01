@@ -8,7 +8,6 @@ from ray_data.embedding import MockEmbedder
 
 
 DS_SIZE = 1000
-CORES_ON_MACHINE_CPU = 8
 
 
 def main():
@@ -26,7 +25,7 @@ def main():
     mat = ds.materialize()
     end = time.perf_counter()
 
-    print(f"Execution time: {end - start} | Expected execution time: {DS_SIZE * SECONDS_FOR_SIMULATION / CORES_ON_MACHINE_CPU} | Throughput: {DS_SIZE / (end - start)}")
+    print(f"Execution time: {end - start} | Throughput: {DS_SIZE / (end - start)}")
     print(mat.stats())
 
 
